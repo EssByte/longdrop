@@ -8,10 +8,11 @@ void main() {
 
     for (final label in ['My ID', 'Send File', 'Receive File']) {
       await tester.tap(find.text(label));
-      await tester.pumpAndSettle();
+      // Receive screen has an endless spinner, so avoid pumpAndSettle.
+      await tester.pump(const Duration(seconds: 1));
       expect(find.text(label), findsOneWidget);
       await tester.pageBack();
-      await tester.pumpAndSettle();
+      await tester.pump(const Duration(seconds: 1));
     }
   });
 }
