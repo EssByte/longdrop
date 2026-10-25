@@ -9,10 +9,14 @@ void main() {
     for (final label in ['My ID', 'Send File', 'Receive File']) {
       await tester.tap(find.text(label));
       // Receive screen has an endless spinner, so avoid pumpAndSettle.
+      await tester.pump();
       await tester.pump(const Duration(seconds: 1));
       expect(find.text(label), findsOneWidget);
-      await tester.pageBack();
+      expect(find.text('Longdrop'), findsNothing);
+      await tester.tap(find.byTooltip('Back'));
+      await tester.pump();
       await tester.pump(const Duration(seconds: 1));
+      expect(find.text('Longdrop'), findsOneWidget);
     }
   });
 }
