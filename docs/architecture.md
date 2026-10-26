@@ -165,4 +165,3 @@ lib/
 - **`lib/backend/`** — the project owner's own code. Plain Dart with zero Flutter/UI imports. Owns all crypto, signaling and WebRTC logic. AI assistants must not touch this layer's logic (see [AGENTS.md](../AGENTS.md)); only the provider wiring that wraps it lives elsewhere.
 - **`lib/providers/`** — the Riverpod seam. Wraps backend services as providers and exposes state that screens can watch.
 - **`lib/screens/` and `lib/widgets/`** — UI. They only ever import `lib/providers/`, never `lib/backend/` directly.
->>>>>>> cc/20261026-1029-add-riverpod-state-management-layer
