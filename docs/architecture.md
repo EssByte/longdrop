@@ -148,3 +148,21 @@ On resume (app foregrounded again, or foreground service keeps it alive), the ap
 1. Detect the WebSocket is closed.
 2. Reconnect and re-send the REGISTER message automatically, with no user action needed.
 3. If this happens mid-transfer and the foreground service did NOT keep the connection alive, the transfer is lost per the v1 limitation above and must restart from Process 2 (Connection Setup).
+
+## Code structure / state management
+
+The app uses [Riverpod](https://riverpod.dev) (`flutter_riverpod`) as the state-management layer between the backend and the UI.
+
+```
+lib/
+├── backend/     # owner-written logic: crypto, signaling, WebRTC (plain Dart)
+├── providers/   # Riverpod seam: wraps backend services, exposes watchable state
+├── screens/     # full-page UI (Home, My ID, Send, Receive)
+├── widgets/     # reusable UI pieces
+└── main.dart    # app root, wrapped in ProviderScope
+```
+
+- **`lib/backend/`** — the project owner's own code. Plain Dart with zero Flutter/UI imports. Owns all crypto, signaling and WebRTC logic. AI assistants must not touch this layer's logic (see [AGENTS.md](../AGENTS.md)); only the provider wiring that wraps it lives elsewhere.
+- **`lib/providers/`** — the Riverpod seam. Wraps backend services as providers and exposes state that screens can watch.
+- **`lib/screens/` and `lib/widgets/`** — UI. They only ever import `lib/providers/`, never `lib/backend/` directly.
+>>>>>>> cc/20261026-1029-add-riverpod-state-management-layer
