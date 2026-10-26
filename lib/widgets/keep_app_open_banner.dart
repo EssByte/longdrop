@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 /// Shown while a transfer is in progress (v1: both apps must stay open).
 class KeepAppOpenBanner extends StatelessWidget {
@@ -8,19 +9,22 @@ class KeepAppOpenBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
         color: scheme.tertiaryContainer,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Row(
         children: [
-          Icon(Icons.warning_amber_rounded, color: scheme.onTertiaryContainer),
+          Icon(PhosphorIconsFill.warning, color: scheme.onTertiaryContainer),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               'Keep the app open until the transfer finishes.',
-              style: TextStyle(color: scheme.onTertiaryContainer),
+              style: TextStyle(
+                color: scheme.onTertiaryContainer,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
         ],

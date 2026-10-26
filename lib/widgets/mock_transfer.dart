@@ -1,5 +1,11 @@
-/// MOCKUP ONLY: fake transfer progress (0.0–1.0) so screens can be previewed
-/// without a backend. Replace with real transfer state from `lib/providers/`.
+/// MOCKUP ONLY: fake data and transfer progress so screens can be previewed
+/// without a backend. Replace with real state from `lib/providers/`.
+const mockMyId = '7Kq2mXvR9eTz4WnB8cLdYh3sFpJ6uAaNxG5oEiVt1bM2';
+const mockPeerId = '3Fh8Qw2nKxP9aTzLm4VbR7cJ';
+const mockFileName = 'holiday_video.mp4';
+const mockFileSize = '182 MB';
+
+/// Fake transfer progress (0.0–1.0).
 Stream<double> mockProgress({
   Duration total = const Duration(seconds: 4),
 }) async* {
