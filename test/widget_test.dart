@@ -68,4 +68,46 @@ void main() {
     await tester.pump(const Duration(seconds: 5));
     expect(find.text('Done'), findsOneWidget);
   });
+
+  testWidgets('12-word backup & restore onboarding mockup completes',
+      (tester) async {
+    await tester.pumpWidget(const LongdropApp());
+    await tester.tap(find.text('12-Word Setup'));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(find.text('Do you have a 12-word backup phrase?'), findsOneWidget);
+
+    await tester.tap(find.text('Generate New Identity'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(
+      find.text('Write this down, it is the ONLY way to recover your ID.'),
+      findsOneWidget,
+    );
+
+    await tester.tap(
+      find.text('I have written down these 12 words in a safe place'),
+    );
+    await tester.pump();
+    await tester.tap(find.text('Derive Keys'));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('Identity Created & Registered'), findsOneWidget);
+  });
+
+  testWidgets('Responsive desktop viewport displays NavigationRail',
+      (tester) async {
+    tester.view.physicalSize = const Size(1280, 800);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(const LongdropApp());
+    await tester.pump(const Duration(seconds: 1));
+
+    expect(find.byType(NavigationRail), findsOneWidget);
+  });
 }

@@ -18,22 +18,26 @@ IconData _iconFor(String name) {
     'heic' =>
       PhosphorIconsRegular.fileImage,
     'pdf' => PhosphorIconsRegular.filePdf,
+    'wav' || 'mp3' || 'flac' || 'aac' => PhosphorIconsRegular.fileAudio,
     'zip' || 'rar' || '7z' || 'tar' || 'gz' => PhosphorIconsRegular.fileZip,
     _ => PhosphorIconsRegular.file,
   };
 }
 
-/// A file's icon, name and size in a tonal card. [trailing] is optional.
+/// A file's icon, name and size in a tonal Material 3 card. [trailing] and
+/// [subtitle] are optional.
 class FileCard extends StatelessWidget {
   const FileCard({
     super.key,
     required this.name,
     required this.size,
+    this.subtitle,
     this.trailing,
   });
 
   final String name;
   final String size;
+  final String? subtitle;
   final Widget? trailing;
 
   @override
@@ -41,21 +45,35 @@ class FileCard extends StatelessWidget {
     final scheme = Theme.of(context).colorScheme;
     final text = Theme.of(context).textTheme;
     return Container(
-      padding: const EdgeInsets.all(14),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: scheme.surfaceContainerHighest.withOpacity(0.55),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(
+          color: scheme.outlineVariant.withOpacity(0.5),
+        ),
       ),
       child: Row(
         children: [
           Container(
-            width: 48,
-            height: 48,
+            width: 52,
+            height: 52,
             decoration: BoxDecoration(
-              color: scheme.primaryContainer,
-              borderRadius: BorderRadius.circular(14),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  scheme.primaryContainer,
+                  scheme.secondaryContainer,
+                ],
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(_iconFor(name), color: scheme.onPrimaryContainer),
+            child: Icon(
+              _iconFor(name),
+              color: scheme.onPrimaryContainer,
+              size: 26,
+            ),
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -66,13 +84,39 @@ class FileCard extends StatelessWidget {
                   name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: text.titleSmall?.copyWith(fontWeight: FontWeight.w600),
+                  style: text.titleSmall?.copyWith(fontWeight: FontWeight.w700),
                 ),
-                const SizedBox(height: 2),
-                Text(
-                  size,
-                  style:
-                      text.bodySmall?.copyWith(color: scheme.onSurfaceVariant),
+                const SizedBox(height: 4),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(
+                      size,
+                      style: text.bodySmall?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: scheme.primary.withOpacity(0.12),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        subtitle ?? 'E2EE · Full quality',
+                        style: text.labelSmall?.copyWith(
+                          color: scheme.primary,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
