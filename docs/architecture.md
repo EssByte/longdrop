@@ -36,3 +36,20 @@ The server never stores or reads file data.
 Both sender and receiver must keep the app open and online for the whole transfer. Closing the app, losing connection, or the OS killing the app in the background makes the transfer fail, and it must be restarted.
 
 Accepted for v1. The app shows a "keep app open" warning during transfer. Resume support and/or async transfer (server-stored encrypted blob) are considered for v2.
+
+## Code structure / state management
+
+The app uses [Riverpod](https://riverpod.dev) (`flutter_riverpod`) as the state-management layer between the backend and the UI.
+
+```
+lib/
+├── backend/     # owner-written logic: crypto, signaling, WebRTC (plain Dart)
+├── providers/   # Riverpod seam: wraps backend services, exposes watchable state
+├── screens/     # full-page UI (Home, My ID, Send, Receive)
+├── widgets/     # reusable UI pieces
+└── main.dart    # app root, wrapped in ProviderScope
+```
+
+- **`lib/backend/`** — the project owner's own code. Plain Dart with zero Flutter/UI imports. Owns all crypto, signaling and WebRTC logic. AI assistants must not touch this layer's logic (see [AGENTS.md](../AGENTS.md)); only the provider wiring that wraps it lives elsewhere.
+- **`lib/providers/`** — the Riverpod seam. Wraps backend services as providers and exposes state that screens can watch.
+- **`lib/screens/` and `lib/widgets/`** — UI. They only ever import `lib/providers/`, never `lib/backend/` directly.
