@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 /// Circular transfer progress with the percentage inside, an optional
 /// status [label] below, and simulated E2EE chunk stats. [progress] is 0.0–1.0.

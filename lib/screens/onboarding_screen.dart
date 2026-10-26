@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import '../widgets/lottie_graphics.dart';
 import '../widgets/mock_transfer.dart';
@@ -205,7 +205,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               Expanded(
                 child: Text(
                   'Your 12-Word Backup Phrase',
-                  style: text.titleMedium?.copyWith(fontWeight: FontWeight.w700),
+                  style:
+                      text.titleMedium?.copyWith(fontWeight: FontWeight.w700),
                 ),
               ),
               TextButton.icon(

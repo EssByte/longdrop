@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:phosphoricons_flutter/phosphoricons_flutter.dart';
 
 import '../widgets/keep_app_open_banner.dart';
 import '../widgets/lottie_graphics.dart';
@@ -66,10 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     spacing: 24,
                     left: _buildHeroPanel(context),
                     right: _buildActionsColumn(context),
-                  )
-                      .animate()
-                      .fadeIn(duration: 350.ms)
-                      .slideY(
+                  ).animate().fadeIn(duration: 350.ms).slideY(
                         begin: 0.04,
                         duration: 350.ms,
                         curve: Curves.easeOut,
